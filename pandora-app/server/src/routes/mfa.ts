@@ -56,6 +56,6 @@ router.post('/verify', async (req: AuthRequest, res: Response) => {
   } catch (error: any) {
     res.status(500).json({ error: error.message || 'Failed to verify OTP' });
   }
-});
+    });
 
 export default router;

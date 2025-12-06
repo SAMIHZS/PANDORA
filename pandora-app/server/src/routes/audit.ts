@@ -55,7 +55,7 @@ router.get('/', requireRole(['admin']), async (req: AuthRequest, res: Response) 
  * Get workspace audit logs
  */
 router.get('/workspace/:workspaceId', async (req: AuthRequest, res: Response) => {
-  try {
+    try {
     const limit = parseInt(req.query.limit as string) || 100;
     const offset = parseInt(req.query.offset as string) || 0;
 
@@ -64,7 +64,7 @@ router.get('/workspace/:workspaceId', async (req: AuthRequest, res: Response) =>
     res.json({ logs });
   } catch (error: any) {
     res.status(500).json({ error: error.message || 'Failed to get audit logs' });
-  }
+    }
 });
 
 export default router;

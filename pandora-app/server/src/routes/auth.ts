@@ -128,6 +128,6 @@ router.get('/me', authenticate, async (req: AuthRequest, res: Response) => {
   } catch (error: any) {
     res.status(500).json({ error: error.message || 'Failed to get user info' });
   }
-});
+  });
 
 export default router;

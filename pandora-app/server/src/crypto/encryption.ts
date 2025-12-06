@@ -136,7 +136,7 @@ export class EncryptionService {
       privateKey: Buffer.from(keyPair.secretKey).toString('base64'),
       publicKey: Buffer.from(keyPair.publicKey).toString('base64'),
     };
-  }
+    }
 }
 
 export const encryptionService = EncryptionService;

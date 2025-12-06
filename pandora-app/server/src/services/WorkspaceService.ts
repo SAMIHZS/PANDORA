@@ -347,7 +347,7 @@ export class WorkspaceService {
           userName: user.name,
           joinedAt: member.joinedAt,
         });
-      }
+    }
     }
 
     return result;

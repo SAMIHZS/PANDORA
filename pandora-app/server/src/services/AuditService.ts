@@ -183,7 +183,7 @@ export class AuditService {
     }
 
     return enrichedLogs;
-  }
+    }
 }
 
 export const auditService = AuditService;

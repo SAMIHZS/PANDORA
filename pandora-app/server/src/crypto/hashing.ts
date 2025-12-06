@@ -20,7 +20,7 @@ export class HashingService {
         memoryCost: 65536, // 64 MB
         timeCost: 3, // 3 iterations
         parallelism: 4, // 4 threads
-      });
+        });
     } catch (error) {
       logger.error(`Error hashing password: ${error}`);
       throw new Error('Failed to hash password');

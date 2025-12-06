@@ -57,13 +57,13 @@ router.get('/:workspaceId/messages', async (req: AuthRequest, res: Response) => 
  * Delete message
  */
 router.delete('/:workspaceId/messages/:messageId', async (req: AuthRequest, res: Response) => {
-  try {
+    try {
     await messageService.deleteMessage(req.params.messageId, req.userId!);
 
     res.json({ message: 'Message deleted' });
   } catch (error: any) {
     res.status(400).json({ error: error.message || 'Failed to delete message' });
-  }
+    }
 });
 
 export default router;

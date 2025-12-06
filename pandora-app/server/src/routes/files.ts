@@ -108,6 +108,6 @@ router.delete('/:workspaceId/files/:fileId', async (req: AuthRequest, res: Respo
   } catch (error: any) {
     res.status(400).json({ error: error.message || 'Failed to delete file' });
   }
-});
+  });
 
 export default router;
