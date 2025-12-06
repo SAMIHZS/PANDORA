@@ -1,3 +1,71 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: pandora-db
+    environment:
+      POSTGRES_USER: pandora_user
+      POSTGRES_PASSWORD: pandora_secure_password_change_me
+      POSTGRES_DB: pandora_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pandora_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: pandora-api
+    environment:
+      NODE_ENV: development
+      PORT: 5000
+      DATABASE_URL: postgresql://pandora_user:pandora_secure_password_change_me@postgres:5432/pandora_db
+      CLIENT_URL: http://localhost:5173
+      JWT_SECRET: your_jwt_secret_change_me_in_production
+      GOOGLE_CLIENT_ID: your_google_client_id
+      GOOGLE_CLIENT_SECRET: your_google_client_secret
+    ports:
+      - "5000:5000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./server/src:/app/src
+      - ./server/uploads:/app/uploads
+    command: npm run devursor
+
+  # Frontend UI
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: pandora-ui
+    environment:
+      VITE_API_URL: http://localhost:5000
+    ports:
+      - "5173:5173"
+    depends_on:
+      - server
+    volumes:
+      - ./client/src:/app/src
+    command: npm run dev
+
+volumes:
+  postgres_data:
+
+networks:
+  default:
+    name: pandora-network
+
 server/src/main.ts: This file is the entry point of the server application. It initializes the Express app, sets up middleware, and connects to the database.
 
 import express from 'express';
